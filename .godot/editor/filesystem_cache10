@@ -1,0 +1,17 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1751923135
+enums.gd::GDScript/GDScript::6169005297633442258::1751922917::0::1::::<>Node<><>0<>0<><>::
+icon.svg::CompressedTexture2D/CompressedTexture2D::4057494951632300208::1751922917::1751922966::1::::<><><>0<>0<>504befd6bbf6c0edb4fa0a2c89d0d5d3<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+jsp.gd::GDScript/GDScript::8125934070528123567::1751922917::0::1::::<>Node2D<><>0<>0<><>::
+nexus.gd::GDScript/GDScript::438213368613152992::1751923050::0::1::::<>StaticBody2D<><>0<>0<><>::
+node_2d.tscn::PackedScene/PackedScene::4357026119025885719::1751923133::0::1::::<><><>0<>0<><>::uid://dn1i7gwbw3ulj::::res://jsp.gd<>uid://d25afrem7cmyo::::res://nexus.tscn
+red_nexus.tscn::PackedScene/PackedScene::1522734592132776087::1751923129::0::1::::<><><>0<>0<><>::uid://gijkssolykw3::::res://nexus.gd<>uid://bjifbk8rwbpea::::res://sprites/blob_blue.png
+::res://objects/::1751923135
+blue_nexus.tscn::PackedScene::6956365548473229048::1751923101::0::1::::<><><>0<>0<><>::uid://gijkssolykw3::::res://nexus.gd<>uid://bjifbk8rwbpea::::res://sprites/blob_blue.png
+nexus.tscn::PackedScene::9116301990561746558::1751922917::0::1::::<><><>0<>0<><>::uid://gijkssolykw3::::res://nexus.gd<>uid://bjifbk8rwbpea::::res://sprites/blob_blue.png
+unit.gd::GDScript/GDScript::7486635877039959923::1751922917::0::1::::<>CharacterBody2D<><>0<>0<><>::
+unit.tscn::PackedScene/PackedScene::767542339094440099::1751922917::0::1::::<><><>0<>0<><>::uid://dewt2f0gi11yl::::res://objects/unit.gd<>uid://cpush4ptisqat::::res://sprites/blob_pink.png
+::res://scripts/::1751923071
+::res://sprites/::1751922966
+blob_blue.png::CompressedTexture2D/CompressedTexture2D::3034941246239513484::1751922917::1751922966::1::::<><><>0<>0<>d1a3ebad48e1702a87579fa82b838835<>res://.godot/imported/blob_blue.png-d1dd5faeb1fc98f1a033718959121ccd.ctex::
+blob_pink.png::CompressedTexture2D/CompressedTexture2D::5868068530688924163::1751922917::1751922966::1::::<><><>0<>0<>f3e7734960856dc8563ec007ffec6352<>res://.godot/imported/blob_pink.png-c7adfbf74b049eb2675bf8052742f532.ctex::

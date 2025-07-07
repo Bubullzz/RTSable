@@ -4,9 +4,14 @@ extends CharacterBody2D
 @export var damage : int
 
 var team : Teams.Team = Teams.Team.NONE
+var direction
 
+func _ready() -> void:
+    if team == Teams.Team.BLUE:
+        direction = Vector2.RIGHT
+    else:
+        direction = Vector2.LEFT
 func _physics_process(delta: float) -> void:
-    var direction = Vector2(1, 0)
     velocity = direction * 100.0
     move_and_slide()
 

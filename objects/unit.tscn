@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://68l2a6oel2w3"]
+
+[ext_resource type="Texture2D" uid="uid://cpush4ptisqat" path="res://sprites/blob_pink.png" id="1_5j774"]
+[ext_resource type="Script" uid="uid://dewt2f0gi11yl" path="res://objects/unit.gd" id="1_dberb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2pk7s"]
+radius = 7.0
+
+[node name="Unit" type="Node2D"]
+script = ExtResource("1_dberb")
+health = 100
+
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+texture = ExtResource("1_5j774")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_2pk7s")

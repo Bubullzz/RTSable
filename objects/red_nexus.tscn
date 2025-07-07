@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://vxvhl82rkxb0"]
 
 [ext_resource type="Script" uid="uid://gijkssolykw3" path="res://nexus.gd" id="1_dq2cw"]
-[ext_resource type="Texture2D" uid="uid://cpush4ptisqat" path="res://sprites/blob_pink.png" id="2_fmlee"]
+[ext_resource type="Texture2D" uid="uid://ddoww2stgq3l0" path="res://sprites/red_king.png" id="2_fmlee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1b4ah"]
 

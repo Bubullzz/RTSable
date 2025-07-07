@@ -31,6 +31,20 @@ def generate_perlin_frame(offset):
     # Normalize to 0-255
     frame_normalized = ((frame - frame.min()) / (frame.max() - frame.min()) * 255).astype(np.uint8)
     
+    for i in range(HEIGHT):
+        frame_normalized[i][0] = 0
+        frame_normalized[i][1] = 0
+        frame_normalized[i][2] = 0
+        frame_normalized[i][-1] = 0
+        frame_normalized[i][-2] = 0
+        frame_normalized[i][-3] = 0
+    for j in range(WIDTH):
+        frame_normalized[0][j] = 0
+        frame_normalized[1][j] = 0
+        frame_normalized[2][j] = 0
+        frame_normalized[-1][j] = 0
+        frame_normalized[-2][j] = 0
+        frame_normalized[-3][j] = 0
     return frame_normalized
 
 while True:

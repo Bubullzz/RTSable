@@ -14,5 +14,4 @@ func _ready() -> void:
 func _on_timer_timeout() -> void:
     var unit = preload("res://objects/unit.tscn").instantiate().create(team, 10 * spawn_direction + randf() * Vector2.UP)
     add_child(unit)
-    print("Unit created at position: ", unit.global_position)
     pass # Replace with function body.

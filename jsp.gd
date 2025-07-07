@@ -20,6 +20,7 @@ func _ready():
 
     var unit = preload("res://objects/unit.tscn").instantiate().create(Teams.Team.BLUE, Vector2(10,10))
     add_child(unit)
+    $Sprite2D.global_position = Vector2(get_viewport().get_visible_rect().size / 2)
 
 func _process(_delta):
     while udp.get_available_packet_count() > 0:

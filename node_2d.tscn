@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=4 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Script" uid="uid://dn1i7gwbw3ulj" path="res://jsp.gd" id="1_wtcfe"]
+[ext_resource type="PackedScene" uid="uid://d25afrem7cmyo" path="res://nexus.tscn" id="2_0e48y"]
 
 [sub_resource type="Gradient" id="Gradient_wtcfe"]
 offsets = PackedFloat32Array(0, 0.201149, 0.252874, 0.58046, 0.858025)
@@ -16,3 +17,6 @@ g = SubResource("Gradient_wtcfe")
 z_index = -4096
 texture_filter = 1
 rotation = 0.000792212
+
+[node name="Nexus" parent="." instance=ExtResource("2_0e48y")]
+position = Vector2(14.8, 77.7)

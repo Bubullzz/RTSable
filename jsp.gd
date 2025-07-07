@@ -18,7 +18,7 @@ func _ready():
     
     current_array.resize(WIDTH * HEIGHT)
 
-    var unit = preload("res://objects/unit.tscn").instantiate().create(Teams.Team.RED, Vector2(10,10))
+    var unit = preload("res://objects/unit.tscn").instantiate().create(Teams.Team.BLUE, Vector2(10,10))
     add_child(unit)
 
 func _process(_delta):

@@ -20,7 +20,7 @@ texture_filter = 3
 rotation = 0.000792212
 
 [node name="BlueNexus" parent="." instance=ExtResource("3_epypp")]
-position = Vector2(18.3, 48.6)
+position = Vector2(25.5, 109.8)
 
 [node name="RedNexus" parent="." instance=ExtResource("2_0e48y")]
-position = Vector2(97.8, 47.7)
+position = Vector2(289.9, 107.6)

@@ -4,3 +4,5 @@ res://auto_resize.gd
 res://objects/unit.gd
 res://objects/red_nexus.tscn
 res://objects/blue_nexus.tscn
+res://objects/unit.tscn
+res://nexus.gd

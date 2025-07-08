@@ -1,8 +1,8 @@
 extends StaticBody2D
 
-
 @export var health : int
 @export var team : Teams.Team
+
 var spawn_direction : Vector2
 
 func _ready() -> void:

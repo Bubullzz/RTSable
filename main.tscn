@@ -10,12 +10,12 @@ colors = PackedColorArray(0, 0, 0.552941, 1, 0.186541, 0.224123, 0.929984, 1, 0.
 
 [node name="MainScene" type="Node"]
 
-[node name="BlueNexus" parent="." instance=ExtResource("2_1bvp3")]
-position = Vector2(-275, -1)
-scale = Vector2(3, 3)
-
 [node name="RedNexus" parent="." instance=ExtResource("3_lquwl")]
 position = Vector2(263, 3)
+scale = Vector2(3, 3)
+
+[node name="BlueNexus" parent="." instance=ExtResource("2_1bvp3")]
+position = Vector2(-275, -1)
 scale = Vector2(3, 3)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -29,5 +29,6 @@ script = ExtResource("1_h2yge")
 g = SubResource("Gradient_epypp")
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="Timer" to="MapBackground" method="_on_timer_timeout"]

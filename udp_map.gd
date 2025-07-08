@@ -1,7 +1,7 @@
 extends Sprite2D
 
-@export var LOW: int
-@export var HIGH: int
+@export var LOW: int = 40
+@export var HIGH: int = 200
 @export var g : Gradient
 var current_array := []
 
@@ -12,8 +12,8 @@ const HEIGHT = 480
 var received_data := PackedByteArray()
 var expecting_new_frame := false
 var invalidate_path : bool = true
-var GRID_WIDTH = 160
-var GRID_HEIGHT = 120
+#var GRID_WIDTH = 640
+#var GRID_HEIGHT = 120
 
 @onready var astar : AStar2D = AStar2D.new()
 
@@ -38,35 +38,69 @@ func compute_graph():
 	if not invalidate_path:
 		return
 	invalidate_path = false
+	astar = AStar2D.new()
 	
 	var id : int = 0
 	var graph : Dictionary = {}
+	#var text_size = texture.get_size() # Texture
+	var rect_size = get_rect().size # World
+	#var grid_size = Rect2(0, 0, WIDTH, HEIGHT).size
+	#var scaleText_x = text_size.x / GRID_WIDTH
+	#var scaleText_y = text_size.y / GRID_HEIGHT
+	var scaleWorld_x = rect_size.x / WIDTH
+	var scaleWorld_y = rect_size.y / HEIGHT
 	
-	var image : Image = texture.get_image()
-	for y in range(GRID_HEIGHT):
-		for x in range(GRID_WIDTH):
+	#var image : Image = texture.get_image()
+	
+	# TODO: Use grid rect here
+	for y in range(HEIGHT):
+		for x in range(WIDTH):
+			var text_pos : Vector2 = Vector2(x, y)
+			var world_pos : Vector2 = Vector2(x * scaleWorld_x, y * scaleWorld_y)
 			var pixel_current = get_heightmap_pixel(x, y)
-			
+			# TODO: Use grid pos here
+			graph[text_pos] = {"id": id, "reachable": false}
 			if (threshold_astar(pixel_current)):
+				astar.add_point(id, world_pos)
+				graph[text_pos]["reachable"] = true
+			id += 1
 				
-				
-				id += 1
+	for y in range(rect_size.y):
+		for x in range(rect_size.x):
+			var current_pos : Vector2 = Vector2(x, y)
+			if not graph.has(current_pos):
+				continue
+			var current_id = graph[current_pos]["id"]
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					if dx == 0 and dy == 0:
+						continue
+					var neigh_pos : Vector2 = Vector2(x + dx, y + dy)
+					
+					if graph.has(neigh_pos) and graph[neigh_pos]["reachable"]:
+						var neigh_id = graph[neigh_pos]["id"]
+						#var world_pos : Vector2 = astar.get_point_position(neigh_id)
+						# TODO: Compute Weight here
+						astar.connect_points(current_id, neigh_id, false)
+	
+					
+	
 			
 func get_heightmap_pixel(x: int, y: int) -> float:
 	var map_size = texture.get_size()
-	var rect = get_rect()
+	#var rect = get_rect()
 	
 	# Convert scaled world position to map coordinates
-	var map_x = int((x / rect.size.x) * map_size.x)
-	var map_y = int((y / rect.size.y) * map_size.y)
+	#var map_x = int((x / rect.size.x) * map_size.x)
+	#var map_y = int((y / rect.size.y) * map_size.y)
 	
 	# Clamp to map bounds
-	map_x = clamp(map_x, 0, map_size.x - 1)
-	map_y = clamp(map_y, 0, map_size.y - 1)
+	#map_x = clamp(map_x, 0, map_size.x - 1)
+	#map_y = clamp(map_y, 0, map_size.y - 1)
 
 	# Sample depth (assuming grayscale where darker = deeper)
-	var color = 1.0 - current_array[map_y * map_size.x + map_x] / 255.0
-	return 1.0 - color
+	var color = 1.0 - current_array[y * map_size.x + x] / 255.0
+	return color
 
 func _process(_delta):
 	while udp.get_available_packet_count() > 0:

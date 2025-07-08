@@ -3,23 +3,24 @@ extends CharacterBody2D
 @export var health : int
 @export var damage : int
 
+@onready var map = get_node("/root/MainScene/MapBackground")
+var opponent_nexus : Node2D
+var target : Vector2 = Vector2.ZERO
+
 var team : Teams.Team = Teams.Team.NONE
-var direction
 
 func _ready() -> void:
 	if team == Teams.Team.BLUE:
-		direction = Vector2.RIGHT
+		%Sprite.texture = preload("res://sprites/blob_blue.png")
+		opponent_nexus = get_node("/root/MainScene/RedNexus")
 	else:
-		direction = Vector2.LEFT
-func _physics_process(delta: float) -> void:
-	velocity = direction * 100.0
-	move_and_slide()
-
+		opponent_nexus = get_node("/root/MainScene/BlueNexus")
+		
+func _physics_process(_delta: float) -> void:
+	pass
 	
 func create(t: Teams.Team, pos: Vector2) -> Node2D:
 	team = t
-	if team == Teams.Team.BLUE:
-		%Sprite.texture = preload("res://sprites/blob_blue.png")
 	self.global_position = pos
 	return self
 

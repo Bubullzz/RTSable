@@ -35,13 +35,13 @@ tile_set = SubResource("TileSet_272bh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="MapBackground" type="Sprite2D" parent="."]
+[node name="00" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = -4096
 texture_filter = 3
 scale = Vector2(-0.19, -0.19)
 script = ExtResource("1_h2yge")
-LOW = 60
+LOW = 0
 HIGH = 150
 g = SubResource("Gradient_epypp")
 
@@ -53,4 +53,4 @@ position = Vector2(-234, 0)
 [node name="RedNexus" parent="." instance=ExtResource("3_lquwl")]
 position = Vector2(227, 5)
 
-[connection signal="timeout" from="Timer" to="MapBackground" method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="00" method="_on_timer_timeout"]

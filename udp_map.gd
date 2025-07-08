@@ -136,9 +136,8 @@ func _process(_delta):
 func update_texture(data: PackedByteArray):
 	var processed_img = Image.create(WIDTH, HEIGHT, false, Image.FORMAT_RGB8)
 	for i in range(data.size()):
-
 		# Store original value in current_array
-		var d = 255 - data[i]
+		var d = 255 - data[data.size() - i - 1]
 		current_array[i] = d
 		var x = i % WIDTH
 		var y = i / WIDTH

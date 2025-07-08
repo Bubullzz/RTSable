@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var health : int
 @export var damage : int
 
-@onready var map = get_node("/root/MainScene/MapBackground")
+@onready var nav_agent = $NavigationAgent2D
 var opponent_nexus : Node2D
 var target : Vector2 = Vector2.ZERO
 
@@ -15,8 +15,12 @@ func _ready() -> void:
 		opponent_nexus = get_node("/root/MainScene/RedNexus")
 	else:
 		opponent_nexus = get_node("/root/MainScene/BlueNexus")
+
 		
 func _physics_process(_delta: float) -> void:
+	var dir = to_local(nav_agent.get_next_path_position()).normalized()
+	velocity = dir * 100
+	move_and_slide()
 	pass
 	
 func create(t: Teams.Team, pos: Vector2) -> Node2D:
@@ -25,3 +29,7 @@ func create(t: Teams.Team, pos: Vector2) -> Node2D:
 	return self
 
 	
+
+
+func _on_timer_timeout() -> void:
+	nav_agent.set_target_position(opponent_nexus.global_position)

@@ -8,7 +8,7 @@ UDP_PORT = 5555
 WIDTH, HEIGHT = 640, 480  # Frame dimensions
 MAX_UDP_SIZE = 128 * 128 # Maximum safe UDP payload size
 
-SCALE = 0.1  # Adjust for noise granularity
+SCALE = 0.01  # Adjust for noise granularity
 OCTAVES = 6   # More octaves = more detail
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -65,4 +65,4 @@ while True:
     print("Sent END_FRAME signal")
     print(f"Sent frame (value: {current_value})")
 
-    time.sleep(0.01)
+    time.sleep(1)

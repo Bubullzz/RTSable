@@ -1,8 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=9 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Script" uid="uid://dn1i7gwbw3ulj" path="res://udp_map.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c6dyla3fdt8am" path="res://objects/blue_nexus.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://vxvhl82rkxb0" path="res://objects/red_nexus.tscn" id="3_lquwl"]
+[ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="4_1bvp3"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_1bvp3"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
+texture = ExtResource("4_1bvp3")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_1bvp3")
+
+[sub_resource type="TileSet" id="TileSet_272bh"]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+sources/0 = SubResource("TileSetAtlasSource_7mycd")
 
 [sub_resource type="Gradient" id="Gradient_epypp"]
 offsets = PackedFloat32Array(0, 0.107955, 0.1875, 0.221591, 0.255682, 0.357955, 0.403409, 0.5625, 0.664773, 1)
@@ -10,13 +29,9 @@ colors = PackedColorArray(0, 0, 0.552941, 1, 0.186541, 0.224123, 0.929984, 1, 0.
 
 [node name="MainScene" type="Node"]
 
-[node name="RedNexus" parent="." instance=ExtResource("3_lquwl")]
-position = Vector2(263, 3)
-scale = Vector2(3, 3)
-
-[node name="BlueNexus" parent="." instance=ExtResource("2_1bvp3")]
-position = Vector2(-275, -1)
-scale = Vector2(3, 3)
+[node name="PhysicsTileMap" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_272bh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -26,9 +41,16 @@ z_index = -4096
 texture_filter = 3
 scale = Vector2(-0.19, -0.19)
 script = ExtResource("1_h2yge")
+LOW = 60
+HIGH = 150
 g = SubResource("Gradient_epypp")
 
 [node name="Timer" type="Timer" parent="."]
-autostart = true
+
+[node name="BlueNexus" parent="." instance=ExtResource("2_1bvp3")]
+position = Vector2(-234, 0)
+
+[node name="RedNexus" parent="." instance=ExtResource("3_lquwl")]
+position = Vector2(227, 5)
 
 [connection signal="timeout" from="Timer" to="MapBackground" method="_on_timer_timeout"]

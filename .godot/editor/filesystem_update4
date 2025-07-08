@@ -1,8 +1,0 @@
-res://main.tscn
-res://udp_map.gd
-res://auto_resize.gd
-res://objects/unit.gd
-res://objects/red_nexus.tscn
-res://objects/blue_nexus.tscn
-res://objects/unit.tscn
-res://nexus.gd

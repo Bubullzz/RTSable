@@ -5,7 +5,7 @@ from noise import pnoise2  # Requires 'noise' package (pip install noise)
 
 UDP_IP = "127.0.0.1"
 UDP_PORT = 5555
-WIDTH, HEIGHT = 320, 240  # Frame dimensions
+WIDTH, HEIGHT = 640, 480  # Frame dimensions
 MAX_UDP_SIZE = 128 * 128 # Maximum safe UDP payload size
 
 SCALE = 0.1  # Adjust for noise granularity

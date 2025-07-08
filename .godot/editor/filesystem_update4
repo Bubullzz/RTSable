@@ -1,8 +1,6 @@
-res://node_2d.tscn
-res://nexus.gd
-res://objects/blue_nexus.tscn
-res://objects/red_nexus.tscn
-res://objects/nexus.tscn
+res://main.tscn
+res://udp_map.gd
+res://auto_resize.gd
 res://objects/unit.gd
-res://objects/unit.tscn
-res://jsp.gd
+res://objects/red_nexus.tscn
+res://objects/blue_nexus.tscn

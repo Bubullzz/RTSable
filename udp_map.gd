@@ -138,19 +138,19 @@ func update_texture(data: PackedByteArray):
 	for i in range(data.size()):
 
 		# Store original value in current_array
-
-		current_array[i] = data[i]
+		var d = 255 - data[i]
+		current_array[i] = d
 		var x = i % WIDTH
 		var y = i / WIDTH
 		var offset = PHYSICS_GRID_RATIO / 2
 		if (x % PHYSICS_GRID_RATIO == offset && y % PHYSICS_GRID_RATIO == offset):
 			var w = WIDTH / PHYSICS_GRID_RATIO
-			if data[i] > HIGH or data[i] < LOW:
+			if d > HIGH or d < LOW:
 				%PhysicsTileMap.set_cell(Vector2i(x / PHYSICS_GRID_RATIO, y / PHYSICS_GRID_RATIO), 0, Vector2i(0,0))
 			else:
 				%PhysicsTileMap.set_cell(Vector2i(x / PHYSICS_GRID_RATIO, y / PHYSICS_GRID_RATIO), 0, Vector2i(1,0))
 		# Process the value through your custom function
-		var processed_value = g.sample(data[i] / 255.0) 
+		var processed_value = g.sample(d / 255.0) 
 		
 		# Set the processed pixel value (convert to 0-1 range for Color)
 		processed_img.set_pixel(x, y, processed_value)

@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://d25afrem7cmyo"]
+[gd_scene load_steps=6 format=3 uid="uid://d25afrem7cmyo"]
 
 [ext_resource type="Script" uid="uid://gijkssolykw3" path="res://scripts/nexus.gd" id="1_1b4ah"]
 [ext_resource type="Texture2D" uid="uid://bjifbk8rwbpea" path="res://sprites/blob_blue.png" id="2_7ypn0"]
 [ext_resource type="PackedScene" uid="uid://3x7wjdh13erm" path="res://scenes/hurt_box.tscn" id="3_4or7x"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1b4ah"]
-size = Vector2(4, 4)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4or7x"]
+radius = 9.0
+height = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4or7x"]
+radius = 77.0
 
 [node name="Nexus" type="StaticBody2D"]
 collision_layer = 2
@@ -22,10 +26,12 @@ texture_filter = 3
 texture = ExtResource("2_7ypn0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_1b4ah")
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_4or7x")
 
 [node name="HurtBox" parent="." instance=ExtResource("3_4or7x")]
 scale = Vector2(0.2, 0.2)
+shape = SubResource("CircleShape2D_4or7x")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

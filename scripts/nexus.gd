@@ -28,7 +28,6 @@ func _on_timer_timeout() -> void:
 
 func _on_team_changed() -> void:
 	sprite.texture = Utils.get_sprite(entity_info)
-	#opponent_nexus = Utils.get_opponent_nexus(entity_info.team)
 
 func _on_death() -> void:
 	print("Game Over")

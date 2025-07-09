@@ -6,10 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6q2a6"]
 size = Vector2(2, 2)
 
-[node name="Projectile" type="RigidBody2D"]
+[node name="Projectile" type="Area2D"]
 collision_layer = 8
 collision_mask = 0
-gravity_scale = 0.0
 script = ExtResource("2_softn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -19,4 +18,4 @@ shape = SubResource("RectangleShape2D_6q2a6")
 scale = Vector2(3, 3)
 texture = ExtResource("1_q3m7n")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Notifier" type="VisibleOnScreenNotifier2D" parent="."]

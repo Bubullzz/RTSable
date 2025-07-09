@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://k62kstsd2v7h"]
+[gd_scene load_steps=9 format=3 uid="uid://k62kstsd2v7h"]
 
 [ext_resource type="Script" uid="uid://dewt2f0gi11yl" path="res://scripts/unit.gd" id="1_ctwoc"]
 [ext_resource type="Texture2D" uid="uid://cpush4ptisqat" path="res://sprites/blob_pink.png" id="2_davkp"]
@@ -17,6 +17,9 @@ metadata/_custom_type_script = "uid://cysiqoyo31qpx"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5wnup"]
 radius = 6.66667
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gic7v"]
+radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1jvru"]
 radius = 39.0128
@@ -46,6 +49,7 @@ avoidance_mask = 3
 autostart = true
 
 [node name="HurtBox" parent="." instance=ExtResource("3_1jvru")]
+shape = SubResource("CircleShape2D_gic7v")
 
 [node name="DetectionZone" type="Area2D" parent="."]
 collision_layer = 0
@@ -59,5 +63,7 @@ autostart = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

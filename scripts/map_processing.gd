@@ -35,5 +35,3 @@ func _on_udp_frame_received(frame: PackedByteArray):
 		
 	processed_image = Image.create_from_data(TEXTURE_SIZE[0], TEXTURE_SIZE[1], false, Image.FORMAT_RGB8, pixel_buffer)
 	map.texture.update(processed_image)
-
-

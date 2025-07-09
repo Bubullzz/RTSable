@@ -1,13 +1,17 @@
 extends Area2D
 @onready var collision: CollisionShape2D = $HurtBoxShape
 
-@export_range(0, 10, .1) var hurt_box_radius: float        
+@export var shape: Shape2D:
+	set(value):
+		_shape = value
+		
+var _shape: Shape2D = null
 
 func _ready() -> void:
-    collision.shape.radius = hurt_box_radius
+	if _shape != null:
+		collision.shape = _shape
 
-func _on_body_entered(body:Node2D) -> void:
-    print("Body entered: ", body.name)
-    if body is Projectile:
-        get_parent().entity_info.on_hit(body.damage)
-        #body.queue_free()
+func _on_area_entered(area: Area2D) -> void:
+	if area is Projectile and area.team != get_parent().entity_info.team:
+		get_parent().entity_info.on_hit(area.damage)
+		area.queue_free()

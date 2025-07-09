@@ -48,4 +48,3 @@ func _on_udp_frame_received(frame: PackedByteArray):
 
 func _on_timer_timeout() -> void:
 	update_grid = true
-

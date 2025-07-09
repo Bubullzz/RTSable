@@ -65,12 +65,12 @@ texture_filter = 3
 scale = Vector2(-0.19, -0.19)
 
 [node name="BlueNexus" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(-274, 2)
+position = Vector2(-124, 138)
 scale = Vector2(1.5, 1.5)
 entity_info = SubResource("Resource_tipki")
 
 [node name="RedNexus" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(275, 1)
+position = Vector2(111, 135)
 scale = Vector2(1.5, 1.5)
 entity_info = SubResource("Resource_85g3d")
 
@@ -91,4 +91,6 @@ udp_manager = NodePath("../UDP")
 wait_time = 0.5
 autostart = true
 
+[connection signal="frame_received" from="Processing/UDP" to="Processing/TilesetGrid" method="_on_udp_frame_received"]
+[connection signal="frame_received" from="Processing/UDP" to="Processing/MapProcessing" method="_on_udp_frame_received"]
 [connection signal="timeout" from="Processing/Timer" to="Processing/TilesetGrid" method="_on_timer_timeout"]

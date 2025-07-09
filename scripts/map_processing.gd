@@ -20,10 +20,8 @@ func _ready() -> void:
 		map.global_position = camera.global_position
 		
 	pixel_buffer.resize(TEXTURE_SIZE[0] * TEXTURE_SIZE[1] * 3)
-	
-	udp_manager.frame_received.connect(_on_frame_received)
-	
-func _on_frame_received(frame: PackedByteArray):
+		
+func _on_udp_frame_received(frame: PackedByteArray):
 	var size: int = frame.size()
 	for i in range(size):
 		var d: float = udp_manager.MAX_VALUE - frame[size - i - 1]
@@ -37,3 +35,5 @@ func _on_frame_received(frame: PackedByteArray):
 		
 	processed_image = Image.create_from_data(TEXTURE_SIZE[0], TEXTURE_SIZE[1], false, Image.FORMAT_RGB8, pixel_buffer)
 	map.texture.update(processed_image)
+
+

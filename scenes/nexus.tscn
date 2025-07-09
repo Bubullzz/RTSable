@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://d25afrem7cmyo"]
+[gd_scene load_steps=5 format=3 uid="uid://d25afrem7cmyo"]
 
 [ext_resource type="Script" uid="uid://gijkssolykw3" path="res://scripts/nexus.gd" id="1_1b4ah"]
 [ext_resource type="Texture2D" uid="uid://bjifbk8rwbpea" path="res://sprites/blob_blue.png" id="2_7ypn0"]
+[ext_resource type="PackedScene" uid="uid://3x7wjdh13erm" path="res://scenes/hurt_box.tscn" id="3_4or7x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1b4ah"]
+size = Vector2(4, 4)
 
 [node name="Nexus" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
 input_pickable = true
 script = ExtResource("1_1b4ah")
 
@@ -19,6 +23,9 @@ texture = ExtResource("2_7ypn0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1b4ah")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_4or7x")]
+scale = Vector2(0.2, 0.2)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

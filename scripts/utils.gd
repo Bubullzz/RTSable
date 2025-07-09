@@ -37,6 +37,16 @@ func _get_nexus_sprite(team: Team):
 			print("Sprite nexus team not found!")
 			return preload("res://sprites/icon.svg")
 
+func _get_projectile_sprite(team: Team):
+	match team:
+		Utils.Team.RED:
+			return preload("res://sprites/pink_preojectile.png")
+		Utils.Team.BLUE:
+			return preload("res://sprites/blue_projectile.png")
+		_:
+			print("Sprite nexus team not found!")
+			return preload("res://sprites/icon.svg")
+
 func get_sprite(entity: Entity):
 
 	match entity.role:

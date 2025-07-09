@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck63bqysljkp0"]
+
+[ext_resource type="Texture2D" uid="uid://b24ej2toiv41k" path="res://sprites/blue_projectile.png" id="1_q3m7n"]
+[ext_resource type="Script" uid="uid://d14jh3eoiv7em" path="res://scripts/projectile.gd" id="2_softn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6q2a6"]
+size = Vector2(2, 2)
+
+[node name="Projectile" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("2_softn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6q2a6")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_q3m7n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

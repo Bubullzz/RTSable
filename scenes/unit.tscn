@@ -1,19 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://k62kstsd2v7h"]
+[gd_scene load_steps=8 format=3 uid="uid://k62kstsd2v7h"]
 
 [ext_resource type="Script" uid="uid://dewt2f0gi11yl" path="res://scripts/unit.gd" id="1_ctwoc"]
 [ext_resource type="Texture2D" uid="uid://cpush4ptisqat" path="res://sprites/blob_pink.png" id="2_davkp"]
+[ext_resource type="Script" uid="uid://cysiqoyo31qpx" path="res://scripts/entity.gd" id="2_gic7v"]
+[ext_resource type="PackedScene" uid="uid://3x7wjdh13erm" path="res://scenes/hurt_box.tscn" id="3_1jvru"]
+
+[sub_resource type="Resource" id="Resource_tb304"]
+script = ExtResource("2_gic7v")
+health = 100
+damage = 5
+team = 2
+role = 2
+attack = 1
+speed = 50
+metadata/_custom_type_script = "uid://cysiqoyo31qpx"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5wnup"]
 radius = 6.66667
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1jvru"]
+radius = 39.0128
+
 [node name="Unit" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 7
 input_pickable = true
 motion_mode = 1
 wall_min_slide_angle = 0.523599
 safe_margin = 6.0
 script = ExtResource("1_ctwoc")
+entity_info = SubResource("Resource_tb304")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -29,5 +45,19 @@ avoidance_mask = 3
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[node name="HurtBox" parent="." instance=ExtResource("3_1jvru")]
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_1jvru")
+
+[node name="AttackTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

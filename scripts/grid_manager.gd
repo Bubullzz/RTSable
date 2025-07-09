@@ -17,9 +17,8 @@ var update_grid: bool = true
 func _ready() -> void:
 	tileset.scale = camera.get_viewport().get_visible_rect().size / (Vector2(udp_manager.RECEIVE_WIDTH, udp_manager.RECEIVE_HEIGHT) * 16) * PHYSICS_GRID_RATIO
 	tileset.position = camera.global_position - camera.get_viewport_rect().size * 0.5
-	udp_manager.frame_received.connect(_on_frame_received)
 	
-func _on_frame_received(frame: PackedByteArray):
+func _on_udp_frame_received(frame: PackedByteArray):
 	
 	if not update_grid:
 		return
@@ -49,3 +48,4 @@ func _on_frame_received(frame: PackedByteArray):
 
 func _on_timer_timeout() -> void:
 	update_grid = true
+

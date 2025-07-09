@@ -15,3 +15,8 @@ signal died
 @export var role : Utils.Role = Utils.Role.NONE
 @export var attack: Utils.Attack = Utils.Attack.MELEE
 @export_range(0, 1000, 1) var speed: int = 50
+
+func on_hit(_damage: int) -> void:
+	health -= _damage
+	if health <= 0:
+		emit_signal("died")

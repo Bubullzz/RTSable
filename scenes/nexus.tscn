@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://d25afrem7cmyo"]
+
+[ext_resource type="Script" uid="uid://gijkssolykw3" path="res://scripts/nexus.gd" id="1_1b4ah"]
+[ext_resource type="Texture2D" uid="uid://bjifbk8rwbpea" path="res://sprites/blob_blue.png" id="2_7ypn0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1b4ah"]
+
+[node name="Nexus" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_1b4ah")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 3
+texture = ExtResource("2_7ypn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1b4ah")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

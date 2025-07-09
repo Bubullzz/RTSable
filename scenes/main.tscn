@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://b3ctt3wihq5bn"]
+
+[ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://cjdw3l3t62jsr" path="res://scripts/main.gd" id="1_tipki"]
+[ext_resource type="Script" uid="uid://cysiqoyo31qpx" path="res://scripts/entity.gd" id="4_tbgi4"]
+[ext_resource type="Gradient" uid="uid://dym3ctpbsypej" path="res://scenes/grad.tres" id="4_ya4ey"]
+[ext_resource type="Script" uid="uid://djbpka8jytp0h" path="res://scripts/udp_manager.gd" id="6_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://d25afrem7cmyo" path="res://scenes/nexus.tscn" id="7_o6xl0"]
+[ext_resource type="Script" uid="uid://cxckoe56ng5km" path="res://scripts/grid_manager.gd" id="7_tipki"]
+[ext_resource type="Script" uid="uid://ciqfa35bndgy" path="res://scripts/map_processing.gd" id="10_ya4ey"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_1bvp3"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
+texture = ExtResource("1_jyhfs")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_1bvp3")
+
+[sub_resource type="TileSet" id="TileSet_272bh"]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+sources/0 = SubResource("TileSetAtlasSource_7mycd")
+
+[sub_resource type="Resource" id="Resource_tipki"]
+script = ExtResource("4_tbgi4")
+health = 300
+damage = 30
+team = 1
+role = 1
+attack = 1
+speed = 0
+metadata/_custom_type_script = "uid://cysiqoyo31qpx"
+
+[sub_resource type="Resource" id="Resource_85g3d"]
+script = ExtResource("4_tbgi4")
+health = 300
+damage = 30
+team = 0
+role = 1
+attack = 1
+speed = 0
+metadata/_custom_type_script = "uid://cysiqoyo31qpx"
+
+[node name="MainScene" type="Node"]
+script = ExtResource("1_tipki")
+gradient = ExtResource("4_ya4ey")
+
+[node name="LogicMap" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_272bh")
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Map" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+z_index = -4096
+texture_filter = 3
+scale = Vector2(-0.19, -0.19)
+
+[node name="BlueNexus" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(-274, 2)
+scale = Vector2(1.5, 1.5)
+entity_info = SubResource("Resource_tipki")
+
+[node name="RedNexus" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(275, 1)
+scale = Vector2(1.5, 1.5)
+entity_info = SubResource("Resource_85g3d")
+
+[node name="Processing" type="Node" parent="."]
+
+[node name="UDP" type="Node" parent="Processing"]
+script = ExtResource("6_o6xl0")
+
+[node name="TilesetGrid" type="Node" parent="Processing" node_paths=PackedStringArray("udp_manager")]
+script = ExtResource("7_tipki")
+udp_manager = NodePath("../UDP")
+
+[node name="MapProcessing" type="Node" parent="Processing" node_paths=PackedStringArray("udp_manager")]
+script = ExtResource("10_ya4ey")
+udp_manager = NodePath("../UDP")
+
+[node name="Timer" type="Timer" parent="Processing"]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Processing/Timer" to="Processing/TilesetGrid" method="_on_timer_timeout"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://do303hvjjjek0"]
+
+[ext_resource type="Script" uid="uid://cysiqoyo31qpx" path="res://scripts/entity.gd" id="1_iiwub"]
+
+[node name="Entity" type="ResourcePreloader"]
+script = ExtResource("1_iiwub")

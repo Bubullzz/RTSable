@@ -29,7 +29,7 @@ target_include_directories(glview PRIVATE ${LIBFREENECT_INCLUDE_DIRS})
 target_compile_options(glview PRIVATE ${LIBFREENECT_CFLAGS_OTHER})
 
 add_executable(test-cv src/test-cv.cpp)
-add_library(opencv_kinect src/capture-cv.hpp src/capture-cv.cpp src/utils.cpp src/calibration-utils.hpp src/calibration-utils.cpp)
+add_library(opencv_kinect src/capture-cv.hpp src/capture-cv.cpp src/utils.cpp src/calibration-utils.hpp src/calibration-utils.cpp src/udp_server.hpp src/udp_server.cpp)
 target_link_libraries(opencv_kinect PRIVATE opencv_imgproc opencv_calib3d ${LIBFREENECT_LIBRARIES} Qt6::Core m)
 target_include_directories(opencv_kinect PRIVATE ${LIBFREENECT_INCLUDE_DIRS})
 target_compile_options(opencv_kinect PRIVATE ${LIBFREENECT_CFLAGS_OTHER})

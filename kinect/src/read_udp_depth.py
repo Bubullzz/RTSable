@@ -21,7 +21,7 @@ sock.bind((UDP_IP, UDP_PORT))
 print(f"[INFO] UDP server listening on port {UDP_PORT}")
 
 # ==== Fichier de log binaire ====
-output_file = open("reception.bin", "wb")
+output_file = open("reception_depth.bin", "wb")
 
 # ==== Réception boucle ====
 buffer = bytearray()

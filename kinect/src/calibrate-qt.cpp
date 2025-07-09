@@ -13,6 +13,7 @@
 #include "capture-cv.hpp"
 #include "calibration-utils.hpp"
 #include "utils.hpp"
+#include "udp_server.hpp"
 
 //using namespace cv;
 
@@ -291,6 +292,9 @@ QCalibrationApp::QCalibrationApp(QWidget* parent) : QMainWindow(parent)
         cv::Mat W = (m_impl->H1.empty()) ? input : unwrap(input, m_impl->H1);
         cv::Mat transformed = (m_onRGBFrameChange) ? m_onRGBFrameChange(W) : W;
         cv::Mat output = (m_impl->H2.empty()) ? transformed : unwrap(transformed, m_impl->H2);
+
+        send_rgb(output);
+
         {
             auto& to_disp = m_impl->m_output_choice->isChecked() ? output : transformed;
             QImage unwrapped_image(to_disp.data, to_disp.cols, to_disp.rows, to_disp.step, QImage::Format_RGB888);
@@ -337,6 +341,7 @@ QCalibrationApp::QCalibrationApp(QWidget* parent) : QMainWindow(parent)
         cv::Mat depth_rgb = m_onDepthFrameChange(W, m_impl->min_depth, m_impl->max_depth);
         cv::Mat out = (m_impl->H2.empty()) ? depth_rgb : unwrap(depth_rgb, m_impl->H2);
 
+        send_depth(out);
 
         {
             QImage image(depth_rgb.data, depth_rgb.cols, depth_rgb.rows, depth_rgb.step, QImage::Format_RGB888);

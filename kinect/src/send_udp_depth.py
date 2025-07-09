@@ -14,7 +14,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 if len(sys.argv) > 1:
     FILENAME = sys.argv[1]
 else: 
-    FILENAME = "reception.bin"
+    FILENAME = "reception_depth.bin"
 
 with open(FILENAME, "rb") as f:
     frame_data = bytearray()

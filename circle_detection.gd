@@ -1,16 +1,20 @@
 extends Node
 
 var camera : CVCamera = CVCamera.new();
-@export var CameraCanvas : Sprite2D;
-var texture : ImageTexture;
 var coordinates : Vector2;
+var update: bool = true
 
 func _ready():
 	camera.open();
 	camera.flip(true, false);
-	texture = ImageTexture.new();
 
 func _process(delta):
-	texture.set_image(camera.get_image());
+	if not update:
+		return
+	update = false
 	coordinates = camera.get_coordinates();
 	print(coordinates);
+
+
+func _on_cv_timer_timeout() -> void:
+	update = true

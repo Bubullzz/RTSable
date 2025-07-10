@@ -15,6 +15,9 @@ var received_data := PackedByteArray()
 var _temp_data := PackedByteArray()
 
 func _ready():
+	for i in range(RECEIVE_HEIGHT * RECEIVE_WIDTH):
+		received_data.push_back(0)
+	
 	if udp.bind(PORT, "*", BUFFER_SIZE) != OK:
 		push_error("Failed to start UDP client")
 	else:

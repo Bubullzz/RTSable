@@ -341,7 +341,7 @@ QCalibrationApp::QCalibrationApp(QWidget* parent) : QMainWindow(parent)
         cv::Mat depth_rgb = m_onDepthFrameChange(W, m_impl->min_depth, m_impl->max_depth);
         cv::Mat out = (m_impl->H2.empty()) ? depth_rgb : unwrap(depth_rgb, m_impl->H2);
 
-        send_depth(out);
+        send_depth(depth_rgb);
 
         {
             QImage image(depth_rgb.data, depth_rgb.cols, depth_rgb.rows, depth_rgb.step, QImage::Format_RGB888);

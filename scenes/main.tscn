@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=25 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://cjdw3l3t62jsr" path="res://scripts/main.gd" id="1_tipki"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d25afrem7cmyo" path="res://scenes/nexus.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://cxckoe56ng5km" path="res://scripts/grid_manager.gd" id="7_tipki"]
 [ext_resource type="AudioStream" uid="uid://dyn02btajopqn" path="res://sprites/pppppp.mp3" id="10_choun"]
+[ext_resource type="Script" uid="uid://bvjfxqwx854wn" path="res://circle_detection.gd" id="10_trceg"]
 [ext_resource type="Script" uid="uid://ciqfa35bndgy" path="res://scripts/map_processing.gd" id="10_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://dln4e68sa8is8" path="res://sprites/theme.mp3" id="11_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://8flbfola1eo" path="res://sprites/end.mp3" id="12_eb6dy"]
@@ -188,6 +189,16 @@ udp_manager = NodePath("../UDP")
 wait_time = 0.5
 autostart = true
 
+[node name="CircleDetector" type="Node" parent="Processing"]
+script = ExtResource("10_trceg")
+
+[node name="CVTimer" type="Timer" parent="Processing"]
+autostart = true
+
+[node name="TimerMap" type="Timer" parent="Processing"]
+wait_time = 0.1
+autostart = true
+
 [node name="DeathPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("10_choun")
@@ -203,4 +214,6 @@ stream = ExtResource("12_eb6dy")
 volume_db = 17.0
 
 [connection signal="timeout" from="Processing/Timer" to="Processing/TilesetGrid" method="_on_timer_timeout"]
+[connection signal="timeout" from="Processing/CVTimer" to="Processing/CircleDetector" method="_on_cv_timer_timeout"]
+[connection signal="timeout" from="Processing/TimerMap" to="Processing/MapProcessing" method="_on_timer_map_timeout"]
 [connection signal="finished" from="BaseMusic" to="." method="_on_base_music_finished"]

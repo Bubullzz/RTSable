@@ -5,7 +5,7 @@ import sys
 # ==== Configuration ====
 UDP_IP = "127.0.0.1"
 UDP_PORT = 5555
-MAX_UDP_SIZE = 128 * 128  # 16384 octets max par chunk
+MAX_UDP_SIZE = 65_000  # 16384 octets max par chunk
 
 # ==== Socket ====
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

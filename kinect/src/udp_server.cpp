@@ -48,11 +48,11 @@ void udp_server_rgb()
 
     servaddr_rgb.sin_family = AF_INET;
     servaddr_rgb.sin_addr.s_addr = INADDR_ANY;
-    servaddr_rgb.sin_port = htons(PORT_DEPTH);
+    servaddr_rgb.sin_port = htons(PORT_RGB);
 
     cliaddr_rgb.sin_family = AF_INET;
     cliaddr_rgb.sin_addr.s_addr = inet_addr("127.0.0.1");
-    cliaddr_rgb.sin_port = htons(PORT_DEPTH);
+    cliaddr_rgb.sin_port = htons(PORT_RGB);
 }
 
 void send_depth(cv::Mat depth_rgb)

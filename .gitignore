@@ -2,3 +2,5 @@
 build/
 *.bin
 bin/
+*.os
+.sconsign.dblite

@@ -30,6 +30,7 @@ CVCamera::~CVCamera()
 
 void CVCamera::open()
 {
+    std::cout << "IN OPEN" << std::endl;
     udp_client_rgb();
     
     /*capture.open(device);
@@ -75,9 +76,10 @@ void CVCamera::update_frame()
     std::cout << "After receive" << std::endl;
     // frame_rgb = receive_rgb();
 
-    if (frame_raw.empty())
+    while (frame_raw.empty())
     {
-        printf("Error: Could not read frame\n");
+        printf("Error: Could not read frame\nRetrying...\n");
+        frame_raw = receive_rgb();
     }
 
     if (flip_lr || flip_ud)

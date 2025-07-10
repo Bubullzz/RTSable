@@ -86,7 +86,7 @@ cv::Mat depthmap_grayscale(cv::Mat _depth, int min_depth, int max_depth)
     //send_depth(depth_gray); // ou send_buffer(depth_bgr);
     //send_rgb(depth_rgb);
 
-    return depth_bgr;
+    return depth_gray;
 }
 
 int main(int argc, char** argv)

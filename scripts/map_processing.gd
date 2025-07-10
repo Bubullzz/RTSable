@@ -11,6 +11,7 @@ const TEXTURE_SIZE := Vector2i(udp_manager.RECEIVE_WIDTH, udp_manager.RECEIVE_HE
 var processed_image: Image = Image.create(TEXTURE_SIZE[0], TEXTURE_SIZE[1], false, Image.FORMAT_RGB8)
 
 var pixel_buffer: PackedByteArray
+var update: bool = true
 
 func _ready() -> void:
 	if map.texture == null:
@@ -20,8 +21,13 @@ func _ready() -> void:
 		map.global_position = camera.global_position
 		
 	pixel_buffer.resize(TEXTURE_SIZE[0] * TEXTURE_SIZE[1] * 3)
+	
+	udp_manager.frame_received.connect(_on_udp_frame_received)
 		
 func _on_udp_frame_received(frame: PackedByteArray):
+	if not update:
+		return
+	update = false
 	var size: int = frame.size()
 	for i in range(size):
 		var d: float = udp_manager.MAX_VALUE - frame[size - i - 1]
@@ -35,3 +41,6 @@ func _on_udp_frame_received(frame: PackedByteArray):
 		
 	processed_image = Image.create_from_data(TEXTURE_SIZE[0], TEXTURE_SIZE[1], false, Image.FORMAT_RGB8, pixel_buffer)
 	map.texture.update(processed_image)
+
+func _on_timer_map_timeout() -> void:
+	update = true

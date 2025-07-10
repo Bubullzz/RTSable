@@ -1,12 +1,12 @@
 extends Node
 
 var camera : CVCamera = CVCamera.new();
-@export var OO : Sprite2D;
+@export var CameraCanvas : Sprite2D;
 var texture : ImageTexture;
 var coordinates : Vector2;
 
 func _ready():
-	camera.open(0, 1920, 1080);
+	camera.open();
 	camera.flip(true, false);
 	texture = ImageTexture.new();
 

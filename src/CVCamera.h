@@ -9,6 +9,11 @@
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/imgproc.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/vector2.hpp>
+
+#include "udp_client.hpp"
 
 struct StripDimensions {
     int stripLength;
@@ -51,7 +56,7 @@ public:
 	CVCamera();
 	~CVCamera();
 
-    void open(int device, int width, int height);
+    void open();
     void open_file(String path);
     void close();
     Ref<Image> get_image();

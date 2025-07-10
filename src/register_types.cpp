@@ -13,6 +13,8 @@ void initialize_opencv_extension(ModuleInitializationLevel p_level) {
 		return;
 	}
 
+	std::cout << "REGISTER !!!!!" << std::endl;
+
 	ClassDB::register_class<CVCamera>();
 }
 

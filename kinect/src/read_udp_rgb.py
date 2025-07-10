@@ -50,13 +50,10 @@ while True:
 
             # Conversion image et affichage
             img_array = np.frombuffer(buffer, dtype=np.uint8)
-            img = img_array.reshape((IMG_HEIGHT, IMG_WIDTH))
+            img = img_array.reshape((IMG_HEIGHT, IMG_WIDTH, 3))
             if i == 1:
-                print(img)
-                print(np.unique(img))
-                plt.imshow(img, cmap="viridis")
+                plt.imshow(img)
                 plt.show()
-                #cv2.imshow("Image reçue", img)
                 i+=1
         else:
             print("[WARN] END_FRAME reçu sans NEW_FRAME")

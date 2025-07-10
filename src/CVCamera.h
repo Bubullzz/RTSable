@@ -55,8 +55,8 @@ public:
     void open_file(String path);
     void close();
     Ref<Image> get_image();
-    Ref<Image> get_gray_image();
-    Ref<Image> get_overlay_image();
+    Vector2 get_coordinates();
+    std::vector<cv::Vec3f> get_circles();
     int get_width();
     int get_height();
     void flip(bool flip_lr, bool flip_ud);

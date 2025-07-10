@@ -41,6 +41,15 @@ func _get_nexus_sprite(team: Team):
 		_:
 			print("Sprite nexus team not found!")
 			return preload("res://sprites/icon.svg")
+			
+func _get_sawner_sprite(team: Team):
+	match team:
+		Utils.Team.RED:
+			return preload("res://sprites/pink_tent.png")
+		Utils.Team.BLUE:
+			return preload("res://sprites/blue_tent.png")
+		_:
+			return preload("res://sprites/icon.svg")
 
 func _get_projectile_sprite(team: Team):
 	match team:
@@ -59,6 +68,8 @@ func get_sprite(entity: Entity):
 			return _get_unit_sprite(entity.team)
 		Utils.Role.NEXUS:
 			return _get_nexus_sprite(entity.team)
+		Utils.Role.SPAWNER:
+			return _get_sawner_sprite(entity.team)
 		_:
 			print("Sprite role not found!")
 			return preload("res://sprites/icon.svg")

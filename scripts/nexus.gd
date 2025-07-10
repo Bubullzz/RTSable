@@ -11,6 +11,7 @@ var dragging: bool = false
 var drag_offset: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+	entity_info = entity_info.duplicate()
 	entity_info.team_changed.connect(_on_team_changed)
 	entity_info.died.connect(_on_death)
 	if entity_info.team == Utils.Team.BLUE:

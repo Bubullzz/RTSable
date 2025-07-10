@@ -24,10 +24,8 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_pressed("decrease_bottom") and shift:
 		decrease_bottom_threshold()
 	elif Input.is_action_just_pressed("add_spawner_blue") and not shift:
-		print("blue")
 		add_spawner_to_scene(Utils.Team.BLUE)
 	elif Input.is_action_just_pressed("add_spawner_red") and shift:
-		print("red")
 		add_spawner_to_scene(Utils.Team.RED)
 		
 
@@ -45,7 +43,7 @@ func add_spawner_to_scene(team : Utils.Team):
 	
 	
 func increase_bottom_threshold():
-	print("increase")
+
 	var offsets := gradient.offsets
 
 	var new_offset = clamp(offsets[1] + STEP, 0.0, offsets[2] - 0.01)
@@ -53,7 +51,6 @@ func increase_bottom_threshold():
 	GameState.low_threshold += 1
 	
 func decrease_bottom_threshold():
-	print("decrease")
 	var offsets := gradient.offsets
 
 	var new_offset = clamp(offsets[1] - STEP, offsets[0] + 0.01, 1.0)

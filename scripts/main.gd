@@ -4,6 +4,7 @@ extends Node2D
 var low: int
 var high: int
 @onready var death_player: AudioStreamPlayer2D = $DeathPlayer
+@onready var end_player: AudioStreamPlayer2D = $EndPlayer
 const STEP: float = 0.05
 
 func _ready() -> void:

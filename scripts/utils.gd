@@ -31,6 +31,16 @@ func _get_unit_sprite(team: Team):
 		_:
 			print("Sprite team not found!")
 			return preload("res://sprites/icon.svg")
+
+func _get_dead_king_sprite(team: Team):
+	match team:
+		Utils.Team.RED:
+			return preload("res://sprites/red_king_dead.png")
+		Utils.Team.BLUE:
+			return preload("res://sprites/blue_king_dead.png")
+		_:
+			print("Sprite team not found!")
+			return preload("res://sprites/icon.svg")
 			
 func _get_nexus_sprite(team: Team):
 	match team:

@@ -12,6 +12,8 @@ var drag_offset: Vector2 = Vector2.ZERO
 var money: int = 0
 
 func _ready() -> void:
+	if entity_info.role == Utils.Role.SPAWNER:
+		add_to_group("spawners")
 	entity_info = entity_info.duplicate()
 	entity_info.team_changed.connect(_on_team_changed)
 	entity_info.died.connect(_on_death)
@@ -39,11 +41,18 @@ func _on_team_changed() -> void:
 
 func _on_death() -> void:
 	if entity_info.role == Utils.Role.NEXUS:
-		visible = false
+		$Sprite.texture = Utils._get_dead_king_sprite(entity_info.team)
+		get_parent().end_player.play()
 		GameState.finished = true
 		for unit in get_tree().get_nodes_in_group("units"):
 			if unit.entity_info.team == entity_info.team:
 				unit.queue_free()
+		for unit in get_tree().get_nodes_in_group("spawners"):
+			if unit.entity_info.team == entity_info.team:
+				unit.queue_free()
+	if entity_info.role == Utils.Role.SPAWNER:
+		queue_free()
+
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

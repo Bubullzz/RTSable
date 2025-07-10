@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=24 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://cjdw3l3t62jsr" path="res://scripts/main.gd" id="1_tipki"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dyn02btajopqn" path="res://sprites/pppppp.mp3" id="10_choun"]
 [ext_resource type="Script" uid="uid://ciqfa35bndgy" path="res://scripts/map_processing.gd" id="10_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://dln4e68sa8is8" path="res://sprites/theme.mp3" id="11_ya4ey"]
+[ext_resource type="AudioStream" uid="uid://8flbfola1eo" path="res://sprites/end.mp3" id="12_eb6dy"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1bvp3"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -34,12 +35,6 @@ sources/0 = SubResource("TileSetAtlasSource_7mycd")
 font_size = 50
 font_color = Color(0, 0, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
-bg_color = Color(0.027, 0, 0.27, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
-bg_color = Color(0, 0.5, 1, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_85g3d"]
 font_size = 50
 font_color = Color(1, 0, 0, 1)
@@ -49,6 +44,12 @@ bg_color = Color(0.32, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
 bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+bg_color = Color(0.027, 0, 0.27, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+bg_color = Color(0, 0.5, 1, 1)
 
 [sub_resource type="Resource" id="Resource_tipki"]
 script = ExtResource("4_tbgi4")
@@ -76,7 +77,6 @@ gradient = ExtResource("4_ya4ey")
 
 [node name="LogicMap" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-visible = false
 tile_set = SubResource("TileSet_272bh")
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -96,10 +96,10 @@ unique_name_in_owner = true
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 72.0
-offset_top = -107.0
-offset_right = 143.0
-offset_bottom = 34.0
+offset_left = 58.0
+offset_top = -96.0
+offset_right = 129.0
+offset_bottom = 45.0
 grow_vertical = 0
 rotation = 1.57079
 size_flags_horizontal = 0
@@ -107,18 +107,6 @@ size_flags_vertical = 8
 text = "0
 "
 label_settings = SubResource("LabelSettings_tipki")
-
-[node name="BlueHealthBar" type="ProgressBar" parent="Map/CanvasLayer/BlueInfo"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 95.9999
-offset_top = 14.0006
-offset_right = 194.0
-offset_bottom = 27.0006
-rotation = -3.14159
-theme_override_styles/background = SubResource("StyleBoxFlat_choun")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ya4ey")
-show_percentage = false
 
 [node name="ColorRect" type="ColorRect" parent="Map/CanvasLayer/BlueInfo"]
 z_index = -5
@@ -134,26 +122,14 @@ unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -74.0
-offset_top = 104.0
-offset_right = 111.0
-offset_bottom = 173.0
+offset_left = -58.0
+offset_top = 91.0
+offset_right = 127.0
+offset_bottom = 160.0
 grow_horizontal = 0
 rotation = -1.57079
 text = "0            "
 label_settings = SubResource("LabelSettings_85g3d")
-
-[node name="PinkHealthBar" type="ProgressBar" parent="Map/CanvasLayer/PinkInfo"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 91.0001
-offset_top = 12.9995
-offset_right = 188.0
-offset_bottom = 24.9995
-rotation = 3.14159
-theme_override_styles/background = SubResource("StyleBoxFlat_tipki")
-theme_override_styles/fill = SubResource("StyleBoxFlat_85g3d")
-show_percentage = false
 
 [node name="ColorRect" type="ColorRect" parent="Map/CanvasLayer/PinkInfo"]
 z_index = -5
@@ -164,13 +140,34 @@ offset_right = 131.0
 offset_bottom = 60.9994
 scale = Vector2(-2.4231, 0.942798)
 
+[node name="PinkHealthBar" type="ProgressBar" parent="Map/CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 595.0
+offset_right = 692.0
+offset_bottom = 12.0
+rotation = 1.57079
+theme_override_styles/background = SubResource("StyleBoxFlat_tipki")
+theme_override_styles/fill = SubResource("StyleBoxFlat_85g3d")
+show_percentage = false
+
+[node name="BlueHealthBar" type="ProgressBar" parent="Map/CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 44.0
+offset_top = 480.0
+offset_right = 142.0
+offset_bottom = 493.0
+rotation = -1.57079
+theme_override_styles/background = SubResource("StyleBoxFlat_choun")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ya4ey")
+show_percentage = false
+
 [node name="BlueNexus" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(-266, 87)
+position = Vector2(-69, 132)
 scale = Vector2(1.5, 1.5)
 entity_info = SubResource("Resource_tipki")
 
 [node name="RedNexus" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(221, 91)
+position = Vector2(-14, 18)
 scale = Vector2(1.5, 1.5)
 entity_info = SubResource("Resource_85g3d")
 
@@ -200,6 +197,10 @@ max_polyphony = 100
 [node name="BaseMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_ya4ey")
 autoplay = true
+
+[node name="EndPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_eb6dy")
+volume_db = 17.0
 
 [connection signal="frame_received" from="Processing/UDP" to="Processing/TilesetGrid" method="_on_udp_frame_received"]
 [connection signal="frame_received" from="Processing/UDP" to="Processing/MapProcessing" method="_on_udp_frame_received"]

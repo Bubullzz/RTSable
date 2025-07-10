@@ -202,7 +202,5 @@ autoplay = true
 stream = ExtResource("12_eb6dy")
 volume_db = 17.0
 
-[connection signal="frame_received" from="Processing/UDP" to="Processing/TilesetGrid" method="_on_udp_frame_received"]
-[connection signal="frame_received" from="Processing/UDP" to="Processing/MapProcessing" method="_on_udp_frame_received"]
 [connection signal="timeout" from="Processing/Timer" to="Processing/TilesetGrid" method="_on_timer_timeout"]
 [connection signal="finished" from="BaseMusic" to="." method="_on_base_music_finished"]

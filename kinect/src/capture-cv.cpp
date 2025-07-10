@@ -2,6 +2,7 @@
 
 #include <opencv2/imgproc.hpp>
 #include <libfreenect.h>
+#include <iostream>
 
 struct CVKinectCapture::FreenectContext
 {
@@ -27,8 +28,6 @@ struct CVKinectCapture::FreenectContext
             freenect_shutdown(fn_ctx);
     }
 };
-
-
 
 CVKinectCapture::CVKinectCapture(resolution video_res, resolution depth_res)
 {
@@ -92,10 +91,12 @@ void CVKinectCapture::rgb_cb_wrapper(void* _dev, void* data, uint32_t timestamp)
     auto dev = static_cast<freenect_device*>(_dev);
     auto mode = freenect_get_current_video_mode(dev);
     auto rgbmap = cv::Mat(mode.height, mode.width, CV_8UC3, data);
+    std::cout << "In WRAPPER 1" << std::endl;
     if (rgb_cb) {
         // Convert RGB to BGR
         //cv::cvtColor(rgbmap, rgbmap, cv::COLOR_RGB2BGR);
         rgb_cb(rgbmap, timestamp);
+        std::cout << "In WRAPPER 2" << std::endl;
     }
 }
 

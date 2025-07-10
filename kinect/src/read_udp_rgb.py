@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # ==== Configuration ====
 UDP_IP = "127.0.0.1"
-UDP_PORT = 5555
+UDP_PORT = 5556
 
 IMG_WIDTH = 640
 IMG_HEIGHT = 480
@@ -21,7 +21,7 @@ sock.bind((UDP_IP, UDP_PORT))
 print(f"[INFO] UDP server listening on port {UDP_PORT}")
 
 # ==== Fichier de log binaire ====
-output_file = open("reception.bin", "wb")
+output_file = open("reception_rgb.bin", "wb")
 
 # ==== Réception boucle ====
 buffer = bytearray()
@@ -50,13 +50,10 @@ while True:
 
             # Conversion image et affichage
             img_array = np.frombuffer(buffer, dtype=np.uint8)
-            img = img_array.reshape((IMG_HEIGHT, IMG_WIDTH))
+            img = img_array.reshape((IMG_HEIGHT, IMG_WIDTH, 3))
             if i == 1:
-                print(img)
-                print(np.unique(img))
-                plt.imshow(img, cmap="viridis")
+                plt.imshow(img)
                 plt.show()
-                #cv2.imshow("Image reçue", img)
                 i+=1
         else:
             print("[WARN] END_FRAME reçu sans NEW_FRAME")

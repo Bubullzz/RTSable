@@ -16,7 +16,7 @@ speed = 50
 metadata/_custom_type_script = "uid://cysiqoyo31qpx"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5wnup"]
-radius = 6.66667
+radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gic7v"]
 radius = 5.0
@@ -26,11 +26,10 @@ radius = 39.0128
 
 [node name="Unit" type="CharacterBody2D"]
 collision_layer = 4
-collision_mask = 7
+collision_mask = 6
 input_pickable = true
 motion_mode = 1
 wall_min_slide_angle = 0.523599
-safe_margin = 6.0
 script = ExtResource("1_ctwoc")
 entity_info = SubResource("Resource_tb304")
 
@@ -41,9 +40,6 @@ texture = ExtResource("2_davkp")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5wnup")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-avoidance_mask = 3
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -59,11 +55,17 @@ collision_mask = 6
 shape = SubResource("CircleShape2D_1jvru")
 
 [node name="AttackTimer" type="Timer" parent="."]
-autostart = true
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 7.0
+neighbor_distance = 100.0
+time_horizon_obstacles = 1.0
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
-[connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

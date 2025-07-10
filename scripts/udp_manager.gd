@@ -12,6 +12,7 @@ const MAX_VALUE: int = 255
 const BUFFER_SIZE: int = 1024 * 1024
 var expecting_new_frame: bool = false
 var received_data := PackedByteArray()
+var _temp_data := PackedByteArray()
 
 func _ready():
 	if udp.bind(PORT, "*", BUFFER_SIZE) != OK:
@@ -25,11 +26,12 @@ func _process(_delta):
 		var packet_string: String = packet.get_string_from_ascii()
 		
 		if packet_string == "NEW_FRAME":
-			received_data = PackedByteArray()
+			_temp_data = PackedByteArray()
 		elif packet_string == "END_FRAME":
-			if received_data.size() == RECEIVE_WIDTH * RECEIVE_HEIGHT:
+			if _temp_data.size() == RECEIVE_WIDTH * RECEIVE_HEIGHT:
+				received_data = _temp_data.duplicate()
 				frame_received.emit(received_data)
 			else:
-				print("Frame size mismatch: expected ", RECEIVE_WIDTH * RECEIVE_HEIGHT, " got ", received_data.size())
+				print("Frame size mismatch: expected ", RECEIVE_WIDTH * RECEIVE_HEIGHT, " got ", _temp_data.size())
 		else:
-			received_data += packet
+			_temp_data += packet

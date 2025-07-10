@@ -1,7 +1,7 @@
 extends Node
 
 enum Team {
-    RED,
-    BLUE,
-    NONE
+	RED,
+	BLUE,
+	NONE
 }

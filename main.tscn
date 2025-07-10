@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=10 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Script" uid="uid://dn1i7gwbw3ulj" path="res://udp_map.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c6dyla3fdt8am" path="res://objects/blue_nexus.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://vxvhl82rkxb0" path="res://objects/red_nexus.tscn" id="3_lquwl"]
 [ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bvjfxqwx854wn" path="res://circle_detection.gd" id="5_lquwl"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1bvp3"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -52,5 +53,8 @@ position = Vector2(-234, 0)
 
 [node name="RedNexus" parent="." instance=ExtResource("3_lquwl")]
 position = Vector2(227, 5)
+
+[node name="CircleDetector" type="Node" parent="."]
+script = ExtResource("5_lquwl")
 
 [connection signal="timeout" from="Timer" to="00" method="_on_timer_timeout"]

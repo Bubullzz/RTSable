@@ -4,3 +4,9 @@
 
 [node name="Entity" type="ResourcePreloader"]
 script = ExtResource("1_iiwub")
+health = null
+damage = null
+team = null
+role = null
+attack = null
+speed = null

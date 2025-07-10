@@ -15,48 +15,48 @@ if len(sys.argv) > 1:
     FILENAME = sys.argv[1]
 else: 
     FILENAME = "reception.bin"
+while True:
+    with open(FILENAME, "rb") as f:
+        frame_data = bytearray()
+        in_frame = False
+        frame_count = 0
 
-with open(FILENAME, "rb") as f:
-    frame_data = bytearray()
-    in_frame = False
-    frame_count = 0
+        while True:
+            line = f.readline()
+            if not line:
+                print("[INFO] Fin du fichier atteinte.")
+                break
 
-    while True:
-        line = f.readline()
-        if not line:
-            print("[INFO] Fin du fichier atteinte.")
-            break
+            if line.strip() == b"NEW_FRAME":
+                print(f"[INFO] Début d'une nouvelle frame...")
+                frame_data = bytearray()
+                in_frame = True
+                continue
 
-        if line.strip() == b"NEW_FRAME":
-            print(f"[INFO] Début d'une nouvelle frame...")
-            frame_data = bytearray()
-            in_frame = True
-            continue
+            elif line.strip() == b"END_FRAME":
+                frame_data = frame_data[:-1]
+                
+                print(f"[INFO] Fin de la frame #{frame_count} — envoi UDP")
 
-        elif line.strip() == b"END_FRAME":
-            frame_data = frame_data[:-1]
-            
-            print(f"[INFO] Fin de la frame #{frame_count} — envoi UDP")
-
-            # Envoyer NEW_FRAME
-            sock.sendto(b"NEW_FRAME", (UDP_IP, UDP_PORT))
-            time.sleep(0.001)
-
-            # Envoyer en paquets de MAX_UDP_SIZE
-            for i in range(0, len(frame_data), MAX_UDP_SIZE):
-                chunk = frame_data[i:i + MAX_UDP_SIZE]
-                sock.sendto(chunk, (UDP_IP, UDP_PORT))
+                # Envoyer NEW_FRAME
+                sock.sendto(b"NEW_FRAME", (UDP_IP, UDP_PORT))
                 time.sleep(0.001)
 
-            # Envoyer END_FRAME
-            sock.sendto(b"END_FRAME", (UDP_IP, UDP_PORT))
-            time.sleep(0.1)
+                # Envoyer en paquets de MAX_UDP_SIZE
+                for i in range(0, len(frame_data), MAX_UDP_SIZE):
+                    chunk = frame_data[i:i + MAX_UDP_SIZE]
+                    sock.sendto(chunk, (UDP_IP, UDP_PORT))
+                    time.sleep(0.001)
 
-            print(f"[INFO] Frame #{frame_count} envoyée ({len(frame_data)} octets)")
-            frame_count += 1
-            in_frame = False
-            continue
+                # Envoyer END_FRAME
+                sock.sendto(b"END_FRAME", (UDP_IP, UDP_PORT))
+                time.sleep(0.1)
 
-        # Ajout des données binaires
-        if in_frame:
-            frame_data.extend(line)
+                print(f"[INFO] Frame #{frame_count} envoyée ({len(frame_data)} octets)")
+                frame_count += 1
+                in_frame = False
+                continue
+
+            # Ajout des données binaires
+            if in_frame:
+                frame_data.extend(line)

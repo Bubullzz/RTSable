@@ -13,5 +13,6 @@ func _ready() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is Projectile and area.team != get_parent().entity_info.team:
-		get_parent().entity_info.on_hit(area.damage)
+		var is_nexus = get_parent() is Nexus
+		get_parent().entity_info.on_hit(area.damage, is_nexus)
 		area.queue_free()

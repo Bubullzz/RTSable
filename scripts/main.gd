@@ -13,6 +13,13 @@ func _ready() -> void:
 	$BlueNexus.add_to_group("blue_nexus")
 	$RedNexus.add_to_group("red_nexus")
 
+		
+	%PinkHealthBar.max_value = $RedNexus.entity_info.health
+	%PinkHealthBar.value = $RedNexus.entity_info.health
+
+	%BlueHealthBar.max_value = $BlueNexus.entity_info.health
+	%BlueHealthBar.value = $BlueNexus.entity_info.health
+
 func _process(_delta: float) -> void:
 	var shift: bool = Input.is_key_pressed(KEY_SHIFT)
 	if Input.is_action_pressed("increase_top") and shift:

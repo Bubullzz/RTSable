@@ -9,6 +9,7 @@ extends StaticBody2D
 var spawn_direction : Vector2
 var dragging: bool = false
 var drag_offset: Vector2 = Vector2.ZERO
+var money: int = 0
 
 func _ready() -> void:
 	entity_info = entity_info.duplicate()
@@ -45,3 +46,12 @@ func _process(_delta: float) -> void:
 		global_position = get_global_mouse_position() + drag_offset
 		if Input.is_key_pressed(KEY_ESCAPE):
 			dragging = false
+
+
+func add_money(amount: int) -> void:
+	money += amount
+	if entity_info.team == Utils.Team.RED:
+		%PinkInfo.text = str(money)
+	else:
+		%BlueInfo.text = str(money)
+	print(Utils.team_string(entity_info.team), "Money: ", money)

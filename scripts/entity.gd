@@ -4,6 +4,7 @@ extends Resource
 
 signal team_changed
 signal died
+signal damaged(value: int)
 
 @export_category("Entity information")
 @export_range(1, 1000, 1) var health: int = 100
@@ -16,7 +17,8 @@ signal died
 @export var attack: Utils.Attack = Utils.Attack.MELEE
 @export_range(0, 1000, 1) var speed: int = 50
 
-func on_hit(_damage: int) -> void:
+func on_hit(_damage: int, is_nexus: bool) -> void:
 	health -= _damage
 	if health <= 0:
 		emit_signal("died")
+	emit_signal("damaged", health)

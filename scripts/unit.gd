@@ -14,6 +14,7 @@ var udp_manager: UDPManager
 var screen_size: Vector2
 var screen_offset: Vector2
 var max_index: int
+var money_value = 6
 
 func _ready() -> void:
 	entity_info = entity_info.duplicate(true)
@@ -44,14 +45,9 @@ func _physics_process(_delta: float) -> void:
 		var desired_speed = entity_info.speed
 		if value < GameState.low_threshold - GameState.low_threshold * 0.5:
 			desired_speed *= 1.0 - clamp((GameState.low_threshold - value) / GameState.low_threshold, 0.0, 0.9)
-			forget_target()
-			focus = false
+
 		elif value > GameState.low_threshold + GameState.low_threshold * 2:
 			desired_speed *= 1.0 - clamp((value - GameState.high_threshold) / (255 - GameState.high_threshold), 0.0, 0.9)
-			forget_target()
-			focus = false
-		else:
-			focus = true
 				
 		var desired_velocity = direction * desired_speed
 		navigation_agent.set_velocity(desired_velocity)
@@ -74,6 +70,7 @@ func _on_team_changed() -> void:
 
 # Maybe call defered
 func _on_death() -> void: 
+	opponent_nexus.add_money(money_value)
 	queue_free()
 
 func forget_target() -> void:

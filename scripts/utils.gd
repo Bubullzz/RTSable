@@ -93,3 +93,15 @@ func get_opponent_nexus(team: Team):
 		_:
 			print("Opponent not found!")
 			return null
+
+
+
+			
+func team_string(team: Team) -> String:
+	match team:
+		Utils.Team.RED:
+			return "Red"
+		Utils.Team.BLUE:
+			return "Blue"
+		_:
+			return "None"

@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_tb304"]
 script = ExtResource("2_gic7v")
 health = 100
-damage = 5
+damage = 20
 team = 2
 role = 2
 attack = 1

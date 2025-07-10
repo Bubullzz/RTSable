@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 @export var gradient: Gradient
 var low: int
@@ -23,8 +23,27 @@ func _process(_delta: float) -> void:
 		increase_bottom_threshold()
 	elif Input.is_action_pressed("decrease_bottom") and shift:
 		decrease_bottom_threshold()
+	elif Input.is_action_just_pressed("add_spawner_blue") and not shift:
+		print("blue")
+		add_spawner_to_scene(Utils.Team.BLUE)
+	elif Input.is_action_just_pressed("add_spawner_red") and shift:
+		print("red")
+		add_spawner_to_scene(Utils.Team.RED)
+		
 
-
+func add_spawner_to_scene(team : Utils.Team):
+	var mouse_pos = get_global_mouse_position()
+	var spawner: Nexus = Utils.NEXUS_SCENE.instantiate()
+	
+	spawner.entity_info.role = Utils.Role.SPAWNER
+	spawner.entity_info.team = team
+	spawner.position = mouse_pos
+	spawner.entity_info.health = Utils.SPAWNER_HEALTH
+	
+	add_child(spawner)
+	spawner.change_timeout(10)
+	
+	
 func increase_bottom_threshold():
 	print("increase")
 	var offsets := gradient.offsets

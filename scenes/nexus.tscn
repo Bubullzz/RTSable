@@ -1,8 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://d25afrem7cmyo"]
+[gd_scene load_steps=8 format=3 uid="uid://d25afrem7cmyo"]
 
 [ext_resource type="Script" uid="uid://gijkssolykw3" path="res://scripts/nexus.gd" id="1_1b4ah"]
 [ext_resource type="Texture2D" uid="uid://bjifbk8rwbpea" path="res://sprites/blob_blue.png" id="2_7ypn0"]
+[ext_resource type="Script" uid="uid://cysiqoyo31qpx" path="res://scripts/entity.gd" id="2_bjl5e"]
 [ext_resource type="PackedScene" uid="uid://3x7wjdh13erm" path="res://scenes/hurt_box.tscn" id="3_4or7x"]
+
+[sub_resource type="Resource" id="Resource_wbibw"]
+script = ExtResource("2_bjl5e")
+health = 500
+damage = 30
+team = 2
+role = 2
+attack = 1
+speed = 0
+metadata/_custom_type_script = "uid://cysiqoyo31qpx"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4or7x"]
 radius = 9.0
@@ -16,8 +27,11 @@ collision_layer = 2
 collision_mask = 8
 input_pickable = true
 script = ExtResource("1_1b4ah")
+entity_info = SubResource("Resource_wbibw")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SpawnTime" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
 autostart = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -34,4 +48,4 @@ shape = SubResource("CircleShape2D_4or7x")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="SpawnTime" to="." method="_on_timer_timeout"]

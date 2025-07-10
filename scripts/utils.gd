@@ -9,6 +9,7 @@ enum Team {
 enum Role {
 	UNIT,
 	NEXUS,
+	SPAWNER,
 	NONE,
 }
 
@@ -16,6 +17,10 @@ enum Attack {
 	RANGED,
 	MELEE,
 }
+
+const SPAWNER_HEALTH = 200
+const NEXUS_SCENE = preload("res://scenes/nexus.tscn")
+const UNIT_SCENE = preload("res://scenes/unit.tscn")
 
 func _get_unit_sprite(team: Team):
 	match team:
@@ -57,8 +62,17 @@ func get_sprite(entity: Entity):
 		_:
 			print("Sprite role not found!")
 			return preload("res://sprites/icon.svg")
-			
-			
+
+func get_nexus(team: Team):
+	match team:
+		Utils.Team.RED:
+			return GameState.red_nexus
+		Utils.Team.BLUE:
+			return GameState.blue_nexus
+		_:
+			print("Opponent not found!")
+			return null				
+
 func get_opponent_nexus(team: Team):
 	match team:
 		Utils.Team.RED:

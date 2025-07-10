@@ -4,6 +4,7 @@ extends StaticBody2D
 
 @export var entity_info: Entity = Entity.new()
 @onready var sprite: Sprite2D = $Sprite
+@onready var timer: Timer = %SpawnTime
 
 var spawn_direction : Vector2
 var dragging: bool = false
@@ -16,9 +17,12 @@ func _ready() -> void:
 		spawn_direction = Vector2.RIGHT
 	else:
 		spawn_direction = Vector2.LEFT
+		
+func change_timeout(time: int) -> void:
+	timer.wait_time =  time
 
 func _on_timer_timeout() -> void:
-	var unit = preload("res://scenes/unit.tscn").instantiate()
+	var unit = Utils.UNIT_SCENE.instantiate()
 	unit.global_position = 10 * spawn_direction + randf() * Vector2.UP + global_position
 	unit.entity_info.team = entity_info.team
 	unit.entity_info.role = Utils.Role.UNIT

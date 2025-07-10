@@ -3,7 +3,7 @@ extends Node2D
 @export var gradient: Gradient
 var low: int
 var high: int
-
+@onready var death_player: AudioStreamPlayer2D = $DeathPlayer
 const STEP: float = 0.05
 
 func _ready() -> void:
@@ -80,3 +80,7 @@ func decrease_top_threshold():
 	gradient.set_offset(size - 2, new_offset)
 
 	GameState.high_threshold -= 1
+
+
+func _on_base_music_finished() -> void:
+	$BaseMusic.play()

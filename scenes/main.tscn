@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3ctt3wihq5bn"]
+[gd_scene load_steps=23 format=3 uid="uid://b3ctt3wihq5bn"]
 
 [ext_resource type="Texture2D" uid="uid://cqxo8nc1jm228" path="res://sprites/physics_tilemap.png" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://cjdw3l3t62jsr" path="res://scripts/main.gd" id="1_tipki"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" uid="uid://djbpka8jytp0h" path="res://scripts/udp_manager.gd" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://d25afrem7cmyo" path="res://scenes/nexus.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://cxckoe56ng5km" path="res://scripts/grid_manager.gd" id="7_tipki"]
+[ext_resource type="AudioStream" uid="uid://dyn02btajopqn" path="res://sprites/pppppp.mp3" id="10_choun"]
 [ext_resource type="Script" uid="uid://ciqfa35bndgy" path="res://scripts/map_processing.gd" id="10_ya4ey"]
+[ext_resource type="AudioStream" uid="uid://dln4e68sa8is8" path="res://sprites/theme.mp3" id="11_ya4ey"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1bvp3"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -189,6 +191,17 @@ udp_manager = NodePath("../UDP")
 wait_time = 0.5
 autostart = true
 
+[node name="DeathPlayer" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_choun")
+volume_db = 10.0
+max_polyphony = 100
+
+[node name="BaseMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_ya4ey")
+autoplay = true
+
 [connection signal="frame_received" from="Processing/UDP" to="Processing/TilesetGrid" method="_on_udp_frame_received"]
 [connection signal="frame_received" from="Processing/UDP" to="Processing/MapProcessing" method="_on_udp_frame_received"]
 [connection signal="timeout" from="Processing/Timer" to="Processing/TilesetGrid" method="_on_timer_timeout"]
+[connection signal="finished" from="BaseMusic" to="." method="_on_base_music_finished"]

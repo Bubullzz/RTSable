@@ -3,6 +3,7 @@
 #include <opencv2/imgproc.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/vector2.hpp>
 
 using namespace godot;
 
@@ -15,11 +16,10 @@ void CVCamera::_bind_methods()
     ClassDB::bind_method(D_METHOD("open_file"), &CVCamera::open_file);
     ClassDB::bind_method(D_METHOD("close"), &CVCamera::close);
     ClassDB::bind_method(D_METHOD("get_image"), &CVCamera::get_image);
-    ClassDB::bind_method(D_METHOD("get_gray_image"), &CVCamera::get_gray_image);
-    ClassDB::bind_method(D_METHOD("get_overlay_image"), &CVCamera::get_overlay_image);
     ClassDB::bind_method(D_METHOD("get_width"), &CVCamera::get_width);
     ClassDB::bind_method(D_METHOD("get_height"), &CVCamera::get_height);
     ClassDB::bind_method(D_METHOD("flip"), &CVCamera::flip);
+    ClassDB::bind_method(D_METHOD("get_coordinates"), &CVCamera::get_coordinates);
 }
 
 CVCamera::CVCamera()
@@ -132,11 +132,10 @@ Ref<Image> CVCamera::mat_to_image(cv::Mat mat)
     return image;
 }
 
-Ref<Image> CVCamera::get_image()
+std::vector<cv::Vec3f> CVCamera::get_circles()
 {
     update_frame();
 
-    cv::Mat output = frame_rgb.clone();
     cv::GaussianBlur(frame_gray, frame_gray, cv::Size(5, 5), 0);
     cv::medianBlur(frame_gray, frame_gray, 5);
     cv::adaptiveThreshold(frame_gray, frame_gray, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
@@ -145,7 +144,26 @@ Ref<Image> CVCamera::get_image()
     std::vector<cv::Vec3f> circles;
     cv::HoughCircles(frame_gray, circles, cv::HOUGH_GRADIENT_ALT, 1.5, 10,
                      350, 0.88, 0, 0);
+    return circles;
+}
 
+Vector2 CVCamera::get_coordinates()
+{
+    std::vector<cv::Vec3f> circles = get_circles();
+
+    if (circles.empty()) {
+        return Vector2(-1, -1);
+    }
+
+    cv::Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
+    Vector2 coordinates(center.x, center.y);
+    return coordinates;
+}
+
+Ref<Image> CVCamera::get_image()
+{
+    std::vector<cv::Vec3f> circles = get_circles();
+    cv::Mat output = frame_rgb.clone();
     for (auto &c : circles) {
         cv::Point center(cvRound(c[0]), cvRound(c[1]));
         int radius = cvRound(c[2]);
@@ -155,20 +173,6 @@ Ref<Image> CVCamera::get_image()
                       cv::Scalar(0, 128, 255), cv::FILLED);
     }
     return mat_to_image(output);
-}
-
-Ref<Image> CVCamera::get_gray_image()
-{
-    update_frame();
-
-    return mat_to_image(frame_gray);
-}
-
-Ref<Image> CVCamera::get_overlay_image()
-{
-    update_frame();
-
-    return mat_to_image(frame_overlay);
 }
 
 int CVCamera::get_width()

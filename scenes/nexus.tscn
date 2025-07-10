@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_wbibw"]
 script = ExtResource("2_bjl5e")
-health = 500
+health = 2000
 damage = 30
 team = 2
 role = 2

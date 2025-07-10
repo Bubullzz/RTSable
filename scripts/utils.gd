@@ -18,7 +18,7 @@ enum Attack {
 	MELEE,
 }
 
-const SPAWNER_HEALTH = 200
+const SPAWNER_HEALTH = 500
 const NEXUS_SCENE = preload("res://scenes/nexus.tscn")
 const UNIT_SCENE = preload("res://scenes/unit.tscn")
 

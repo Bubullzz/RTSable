@@ -7,7 +7,7 @@ signal died
 signal damaged(value: int)
 
 @export_category("Entity information")
-@export_range(1, 1000, 1) var health: int = 100
+@export_range(1, 5000, 1) var health: int = 100
 @export_range(0, 100, 1) var damage : int  = 5
 @export var team : Utils.Team = Utils.Team.NONE:
 	set(value):

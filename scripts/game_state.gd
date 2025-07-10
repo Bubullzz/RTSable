@@ -2,8 +2,10 @@ extends Node
 
 var blue_nexus: Nexus
 var red_nexus: Nexus
-@export var low_threshold: int = 40
-@export var high_threshold: int = 200
+var finished: bool = false
+		
+@export var low_threshold: int = 30
+@export var high_threshold: int = 220
 var gradient: Gradient
 
 func _ready() -> void:

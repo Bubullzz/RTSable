@@ -8,7 +8,6 @@ extends CharacterBody2D
 @onready var opponent_nexus : Nexus = Utils.get_opponent_nexus(entity_info.team)
 @onready var attack_timer: Timer = $AttackTimer
 var target: Node2D = null # Nexus or unit to attack
-var focus: bool = true
 
 var udp_manager: UDPManager
 var screen_size: Vector2
@@ -17,6 +16,7 @@ var max_index: int
 var money_value = 6
 
 func _ready() -> void:
+	add_to_group("units")
 	entity_info = entity_info.duplicate(true)
 	
 	udp_manager = get_tree().root.get_node("MainScene/Processing/UDP")
@@ -30,6 +30,12 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
+	
+	if GameState.finished and target != null:
+		forget_target()
+		target = null
+		return
+		
 	if target == null and not navigation_agent.is_navigation_finished():
 		var next_position = navigation_agent.get_next_path_position()
 		var direction = (next_position - global_position).normalized()
@@ -44,14 +50,10 @@ func _physics_process(_delta: float) -> void:
 		var value = udp_manager.MAX_VALUE - udp_manager.received_data[index]
 		
 		var desired_speed = entity_info.speed
-		if value < GameState.low_threshold - GameState.low_threshold * 0.5:
+		if value < GameState.low_threshold:
 			desired_speed *= 1.0 - clamp((GameState.low_threshold - value) / GameState.low_threshold, 0.0, 0.9)
-			forget_target()
-			focus = false
 		elif value > GameState.high_threshold + GameState.high_threshold * 0.1:
 			desired_speed *= 1.0 - clamp((value - GameState.high_threshold) / (255 - GameState.high_threshold), 0.0, 0.9)
-			forget_target()
-			focus = false
 		var desired_velocity = direction * desired_speed
 		navigation_agent.set_velocity(desired_velocity)
 	
@@ -60,7 +62,8 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		queue_free()
 
 func _on_timer_timeout() -> void:
-	navigation_agent.set_target_position(opponent_nexus.global_position)
+	if not GameState.finished:
+		navigation_agent.set_target_position(opponent_nexus.global_position)
 
 func _on_team_changed() -> void:
 	sprite.texture = Utils.get_sprite(entity_info)
@@ -82,7 +85,7 @@ func forget_target() -> void:
 		target = null
 	
 func _on_detection_zone_body_entered(body:Node2D) -> void:
-	if target == null and focus and (body is Unit or body is Nexus) and body.entity_info.team != entity_info.team:
+	if target == null and (body is Unit or body is Nexus) and body.entity_info.team != entity_info.team:
 		attack_timer.start(1)
 		target = body
 		target.entity_info.died.connect(_on_target_death)
@@ -106,7 +109,7 @@ func _on_attack_timer_timeout() -> void:
 	get_parent().add_child(projectile)
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
-	if target == null:
+	if target == null and not GameState.finished:
 		velocity = safe_velocity
 		move_and_slide()
 		

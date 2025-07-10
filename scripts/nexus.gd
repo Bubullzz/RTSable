@@ -24,6 +24,10 @@ func change_timeout(time: int) -> void:
 	timer.wait_time =  time
 
 func _on_timer_timeout() -> void:
+	if GameState.finished:
+		timer.stop()
+		return
+		
 	var unit = Utils.UNIT_SCENE.instantiate()
 	unit.global_position = 10 * spawn_direction + randf() * Vector2.UP + global_position
 	unit.entity_info.team = entity_info.team
@@ -34,7 +38,12 @@ func _on_team_changed() -> void:
 	sprite.texture = Utils.get_sprite(entity_info)
 
 func _on_death() -> void:
-	print("Game Over")
+	if entity_info.role == Utils.Role.NEXUS:
+		visible = false
+		GameState.finished = true
+		for unit in get_tree().get_nodes_in_group("units"):
+			if unit.entity_info.team == entity_info.team:
+				unit.queue_free()
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

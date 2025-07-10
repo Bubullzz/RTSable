@@ -39,6 +39,7 @@ texture_filter = 1
 texture = ExtResource("2_davkp")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+scale = Vector2(0.2, 0.2)
 shape = SubResource("CircleShape2D_5wnup")
 
 [node name="Timer" type="Timer" parent="."]

@@ -16,6 +16,7 @@ env = SConscript("godot-cpp/SConstruct")
 # set this path to your library files. This is the location of dll, dylib and so files.
 opencv_library_path = [
     '/usr/lib64',
+    '/usr/lib/x86_64-linux-gnu',
     #'YourCustomOpencvFolder/build/x64/vc16/lib'
 ]
 

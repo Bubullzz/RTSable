@@ -1,10 +1,5 @@
 #include "CVCamera.h"
 
-#include <opencv2/imgproc.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
-#include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/variant/vector2.hpp>
-
 using namespace godot;
 
 typedef cv::Vec<uint8_t, 4> Pixel;
@@ -33,16 +28,18 @@ CVCamera::~CVCamera()
     close();
 }
 
-void CVCamera::open(int device, int width = 1920, int height = 1080)
+void CVCamera::open()
 {
-    capture.open(device);
+    udp_client_rgb();
+    
+    /*capture.open(device);
     capture.set(cv::CAP_PROP_FRAME_WIDTH, width);
     capture.set(cv::CAP_PROP_FRAME_HEIGHT, height);
     if (!capture.isOpened())
     {
         capture.release();
         UtilityFunctions::push_error("Couldn't open camera.");
-    }
+    }*/
 }
 
 void CVCamera::open_file(String path)
@@ -72,7 +69,11 @@ void CVCamera::update_frame()
     last_update_frame = current_frame;
 
     // Read the frame from the camera
-    capture.read(frame_raw);
+    //capture.read(frame_raw);
+    std::cout << "Before receive" << std::endl;
+    frame_raw = receive_rgb();
+    std::cout << "After receive" << std::endl;
+    // frame_rgb = receive_rgb();
 
     if (frame_raw.empty())
     {

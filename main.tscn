@@ -57,4 +57,9 @@ position = Vector2(227, 5)
 [node name="CircleDetector" type="Node" parent="."]
 script = ExtResource("5_lquwl")
 
+[node name="CameraCanvas" type="Sprite2D" parent="CircleDetector"]
+z_index = -4096
+texture_filter = 3
+scale = Vector2(-0.19, -0.19)
+
 [connection signal="timeout" from="Timer" to="00" method="_on_timer_timeout"]

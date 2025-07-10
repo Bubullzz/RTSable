@@ -39,16 +39,19 @@ func _physics_process(_delta: float) -> void:
 		var normalized_y = clamp(position_screen.y / screen_size.y, 0.0, 1.0)
 		var x = int(floor(normalized_x * udp_manager.RECEIVE_WIDTH))
 		var y = int(floor(normalized_y * udp_manager.RECEIVE_HEIGHT))
-		
+				
 		var index = clamp(max_index - y * udp_manager.RECEIVE_WIDTH - x, 0, max_index)
 		var value = udp_manager.MAX_VALUE - udp_manager.received_data[index]
+		
 		var desired_speed = entity_info.speed
 		if value < GameState.low_threshold - GameState.low_threshold * 0.5:
 			desired_speed *= 1.0 - clamp((GameState.low_threshold - value) / GameState.low_threshold, 0.0, 0.9)
-
-		elif value > GameState.low_threshold + GameState.low_threshold * 2:
+			forget_target()
+			focus = false
+		elif value > GameState.high_threshold + GameState.high_threshold * 0.1:
 			desired_speed *= 1.0 - clamp((value - GameState.high_threshold) / (255 - GameState.high_threshold), 0.0, 0.9)
-				
+			forget_target()
+			focus = false
 		var desired_velocity = direction * desired_speed
 		navigation_agent.set_velocity(desired_velocity)
 	

@@ -31,18 +31,17 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_pressed("decrease_bottom") and shift:
 		decrease_bottom_threshold()
 	elif Input.is_action_just_pressed("add_spawner_blue") and not shift:
-		add_spawner_to_scene(Utils.Team.BLUE)
+		add_spawner_to_scene(Utils.Team.BLUE, get_global_mouse_position())
 	elif Input.is_action_just_pressed("add_spawner_red") and shift:
-		add_spawner_to_scene(Utils.Team.RED)
+		add_spawner_to_scene(Utils.Team.RED, get_global_mouse_position())
 		
 
-func add_spawner_to_scene(team : Utils.Team):
-	var mouse_pos = get_global_mouse_position()
+func add_spawner_to_scene(team : Utils.Team, p: Vector2):
 	var spawner: Nexus = Utils.NEXUS_SCENE.instantiate()
 	
 	spawner.entity_info.role = Utils.Role.SPAWNER
 	spawner.entity_info.team = team
-	spawner.position = mouse_pos
+	spawner.position = p
 	spawner.entity_info.health = Utils.SPAWNER_HEALTH
 	
 	add_child(spawner)

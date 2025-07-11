@@ -146,7 +146,7 @@ std::vector<cv::Vec3f> CVCamera::get_circles()
 
     std::vector<cv::Vec3f> circles;
     cv::HoughCircles(frame_gray, circles, cv::HOUGH_GRADIENT_ALT, 1.5, 10,
-                     350, 0.88, 0, 0);
+                     350, 0.70, 0, 0);
     return circles;
 }
 

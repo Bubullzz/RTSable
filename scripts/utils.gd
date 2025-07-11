@@ -18,9 +18,38 @@ enum Attack {
 	MELEE,
 }
 
+const SPAWNER_PRICE = 100
 const SPAWNER_HEALTH = 500
 const NEXUS_SCENE = preload("res://scenes/nexus.tscn")
 const UNIT_SCENE = preload("res://scenes/unit.tscn")
+
+func add_spawner_to_scene(team : Utils.Team, p: Vector2):
+	
+	var nexus: Nexus = Utils.get_nexus(team)
+	var opponent: Nexus = Utils.get_opponent_nexus(team)
+	
+	if p.x == -1 and p.y == -1:
+		return
+		
+	print(p)
+	
+	if nexus.money < SPAWNER_PRICE:
+		return
+		
+	#if p.distance_to(opponent.global_position) < 150:
+	#	return
+		
+	nexus.money -= SPAWNER_PRICE
+
+	var spawner: Nexus = Utils.NEXUS_SCENE.instantiate()
+	
+	spawner.entity_info.role = Utils.Role.SPAWNER
+	spawner.entity_info.team = team
+	spawner.position = p
+	spawner.entity_info.health = Utils.SPAWNER_HEALTH
+	
+	add_child(spawner)
+	spawner.change_timeout(10)
 
 func _get_unit_sprite(team: Team):
 	match team:

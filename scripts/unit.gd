@@ -80,8 +80,9 @@ func _on_death() -> void:
 	var random_pitch = randf_range(0.5, 3)
 	#$AudioStreamPlayer2D.pitch_scale = random_pitch
 	print("Unit died, adding money to nexus: ", opponent_nexus.entity_info.team, " Money: ", money_value)
-	get_parent().death_player.pitch_scale = random_pitch
-	get_parent().death_player.playing = true
+
+	get_tree().root.get_node("/root/MainScene").death_player.pitch_scale = random_pitch
+	get_tree().root.get_node("/root/MainScene").death_player.playing = true
 	queue_free()
 
 func forget_target() -> void:

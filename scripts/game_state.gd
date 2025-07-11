@@ -4,7 +4,7 @@ var blue_nexus: Nexus
 var red_nexus: Nexus
 var finished: bool = false
 		
-@export var low_threshold: int = 30
+@export var low_threshold: int = 10
 @export var high_threshold: int = 220
 var gradient: Gradient
 

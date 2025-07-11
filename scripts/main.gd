@@ -20,6 +20,9 @@ func _ready() -> void:
 
 	%BlueHealthBar.max_value = $BlueNexus.entity_info.health
 	%BlueHealthBar.value = $BlueNexus.entity_info.health
+	
+	$RedNexus.add_money(0)
+	$BlueNexus.add_money(0)
 
 func _process(_delta: float) -> void:
 	var shift: bool = Input.is_key_pressed(KEY_SHIFT)
